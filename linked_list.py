@@ -59,7 +59,7 @@ class LinkedList:
         self.length -= 1  # Decrease length
         return popped
 
-    def prepend(self, value):
+    def unshift(self, value):
         '''
         Adds Item to the beginning of the list
         '''
@@ -76,7 +76,28 @@ class LinkedList:
             self.head = new_node
         
         self.length += 1
+        return True
 
+    def shift(self):
+        '''
+        Removes the first item in the list
+        '''
+        # Case: Empty list
+        if self.length == 0:
+            return None
+        
+        removed_node = self.head
+        
+        # Update head to the next node
+        self.head = self.head.next
+        self.length -= 1
+        
+        # If the list becomes empty, update tail as well
+        if self.length == 0:
+            self.tail = None
+        
+        return removed_node
+    
     def insert(self, index, value):
         pass
 
