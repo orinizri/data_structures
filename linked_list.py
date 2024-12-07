@@ -18,6 +18,9 @@ class LinkedList:
             temp_head = temp_head.next
 
     def append(self, value):
+        '''
+        Adds node to the last of the list
+        '''
         new_node = Node(value=value)
         if self.length == 0:
             self.head = new_node
@@ -25,16 +28,19 @@ class LinkedList:
         else:
             self.tail.next = new_node
             self.tail = new_node
-        self.length = 1
+        self.length += 1
         return True
 
     def pop(self):
-        # Empty linked list
+        '''
+        Removes the last node and returns it, or returns None if the list is empty.
+        '''
+        # Case: Empty linked list
         if self.length == 0:
             print("Empty List")
             return None
-        
-        # Single node
+
+        # Case: Single node in the list
         if self.length == 1:
             popped = self.head
             self.head = None
@@ -42,26 +48,45 @@ class LinkedList:
             self.length = 0
             return popped
 
-        # Multiple nodes
-        temp_head = self.head
-        while temp_head.next is self.tail:
-            # Arrives second last
-            temp_head = temp_head.next
+        # Case: Multiple nodes in the list
+        temp = self.head
+        while temp.next is not self.tail:  # Traverse to the second-to-last node
+            temp = temp.next
+
         popped = self.tail  # Save the current tail
-        self.tail = temp_head
-        self.tail.next = None
-        self.length -= 1
+        self.tail = temp  # Update tail to the second-to-last node
+        self.tail.next = None  # Disconnect the old tail
+        self.length -= 1  # Decrease length
         return popped
 
     def prepend(self, value):
-        pass
+        '''
+        Adds Item to the beginning of the list
+        '''
+        # Created new node
+        new_node = Node(value)
+        
+        # If list is empty:
+        if self.length == 0:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            # Non empty list
+            new_node.next = self.head
+            self.head = new_node
+        
+        self.length += 1
 
     def insert(self, index, value):
         pass
 
 
-# linked_list = LinkedList(5)
-# linked_list.append(6)
-# linked_list.print_list()
-# linked_list.pop()
-# linked_list.print_list()
+linked_list = LinkedList(5)
+linked_list.append(6)
+linked_list.print_list()
+print("pop")
+linked_list.pop()
+linked_list.print_list()
+print("after pop")
+linked_list.prepend(4)
+linked_list.print_list()
